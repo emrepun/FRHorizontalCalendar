@@ -48,4 +48,8 @@ extension ContentViewModel: FRCalendarViewModelTapObserving {
     func didSetInitialHeight(_ height: CGFloat) {
         calendarHeight = height
     }
+
+    func didAutoSelectInitialDay(_ date: Date) {
+        
+    }
 }

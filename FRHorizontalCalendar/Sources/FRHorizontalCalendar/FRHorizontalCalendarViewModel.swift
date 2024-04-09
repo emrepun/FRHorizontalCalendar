@@ -24,6 +24,7 @@ public protocol FRCalendarViewModelTapObserving: AnyObject {
     func didSetInitialHeight(_ height: CGFloat)
     func didTapDay(onDate: Date)
     func dayAppeared(onDate: Date)
+    func didAutoSelectInitialDay(_ date: Date)
 }
 
 public final class FRHorizontalCalendarViewModel: ObservableObject {
@@ -34,7 +35,10 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
 
     public weak var delegate: FRCalendarViewModelTapObserving? {
         didSet {
-            delegate?.didTapDay(onDate: allDays[selectedDayIndex].date)
+            guard allDays.indices.contains(selectedDayIndex) else {
+                return
+            }
+            delegate?.didAutoSelectInitialDay(allDays[selectedDayIndex].date)
         }
     }
 
@@ -77,6 +81,13 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
     public init(startDate: Date) {
         var allDays = Date.dates(from: startDate, to: .now).map {
             FRCalendarDayModel(date: $0, isSelected: false, hasContentAvailable: false, isAvailable: true)
+        }
+        guard allDays.count > 7 else {
+//            assertionFailure("The calendar must be initialised with a start date that is earlier than 7 days ago")
+            self.allDays = []
+            self.selectedDayIndex = 0
+            self.selectedDayText = ""
+            return
         }
         // select today
         allDays[allDays.count - 1].isSelected = true
@@ -207,8 +218,13 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
         let numberOfUnavailableDaysToAppend = 7 - seventhLastDay.date.weekday + 1
 
         for _ in 0..<numberOfUnavailableDaysToAppend {
-            let lastDay = self.allDays.last!
-            self.allDays.append(.init(date: Calendar.current.date(byAdding: .day, value: 1, to: lastDay.date)!, isSelected: false, hasContentAvailable: false, isAvailable: false))
+            guard let lastDay = allDays.last, 
+                    let dateToAppend = Calendar.current.date(byAdding: .day, value: 1, to: lastDay.date) else {
+                // no point on continuing on for, if for some reason we couldn't get a date for a number,
+                // the calendar will be broken. Should never happen though.
+                return
+            }
+            self.allDays.append(.init(date: dateToAppend, isSelected: false, hasContentAvailable: false, isAvailable: false))
         }
     }
 
@@ -267,34 +283,5 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
                 mostProminentMonthText = mostProminentMonthFormatter.monthSymbols[mostFrequentElement - 1]
             }
         }
-    }
-}
-
-
-extension Date {
-    static func dates(from fromDate: Date, to toDate: Date) -> [Date] {
-        var dates: [Date] = []
-        var date = fromDate
-        
-        while date <= toDate {
-            let startOfDate = Calendar.current.startOfDay(for: date)
-            dates.append(startOfDate)
-            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
-            date = newDate
-        }
-        return dates
-    }
-}
-
-extension Date {
-    var weekday: Int {
-        (Calendar.current.component(.weekday, from: self) - Calendar.current.firstWeekday + 7) % 7 + 1
-    }
-    
-    var endOfDay: Date {
-        var components = DateComponents()
-        components.day = 1
-        components.second = -1
-        return Calendar.current.date(byAdding: components, to: Calendar.current.startOfDay(for: self))!
     }
 }
