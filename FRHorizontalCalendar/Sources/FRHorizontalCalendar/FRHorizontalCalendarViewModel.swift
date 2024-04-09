@@ -163,24 +163,7 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
         delegate?.didTapDay(onDate: allDays[index].date)
     }
 
-    // MARK: - Public API
-    public func setContentAvailableForDaysWithGivenDates(_ dates: [Date]) {
-        for date in dates {
-            if let matchingIndex = allDaysDictionary[Calendar.current.startOfDay(for: date)] {
-                allDays[matchingIndex].hasContentAvailable = true
-            }
-        }
-    }
-
-    public func removeContentAvailableForDayWithGivenDate(_ date: Date) {
-        let matchingIndex = allDays.firstIndex { model in
-            Calendar.current.isDate(model.date, inSameDayAs: date)
-        }
-        if let matchingIndex {
-            allDays[matchingIndex].hasContentAvailable = false
-        }
-    }
-
+    // MARK: - Private
     private func updateSelection(_ index: Int) {
         allDays[selectedDayIndex].isSelected.toggle()
         allDays[index].isSelected.toggle()
@@ -262,6 +245,26 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
             withAnimation {
                 mostProminentMonthText = mostProminentMonthFormatter.monthSymbols[mostFrequentElement - 1]
             }
+        }
+    }
+}
+
+// MARK: - Public API
+public extension FRHorizontalCalendarViewModel {
+    func setContentAvailableForDaysWithGivenDates(_ dates: [Date]) {
+        for date in dates {
+            if let matchingIndex = allDaysDictionary[Calendar.current.startOfDay(for: date)] {
+                allDays[matchingIndex].hasContentAvailable = true
+            }
+        }
+    }
+
+    func removeContentAvailableForDayWithGivenDate(_ date: Date) {
+        let matchingIndex = allDays.firstIndex { model in
+            Calendar.current.isDate(model.date, inSameDayAs: date)
+        }
+        if let matchingIndex {
+            allDays[matchingIndex].hasContentAvailable = false
         }
     }
 }
