@@ -172,7 +172,8 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
         delegate?.didTapDay(onDate: allDays[index].date)
     }
 
-    func setContentAvailableForDaysWithGivenDates(_ dates: [Date]) {
+    // MARK: - Public API
+    public func setContentAvailableForDaysWithGivenDates(_ dates: [Date]) {
         for date in dates {
             if let matchingIndex = allDaysDictionary[Calendar.current.startOfDay(for: date)] {
                 allDays[matchingIndex].hasContentAvailable = true
@@ -180,7 +181,7 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
         }
     }
 
-    func removeContentAvailableForDayWithGivenDate(_ date: Date) {
+    public func removeContentAvailableForDayWithGivenDate(_ date: Date) {
         let matchingIndex = allDays.firstIndex { model in
             Calendar.current.isDate(model.date, inSameDayAs: date)
         }

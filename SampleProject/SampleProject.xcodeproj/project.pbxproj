@@ -11,6 +11,8 @@
 		FBCF2EA02BC4457100B409B2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF2E9F2BC4457100B409B2 /* ContentView.swift */; };
 		FBCF2EA22BC4457300B409B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCF2EA12BC4457300B409B2 /* Assets.xcassets */; };
 		FBCF2EA52BC4457300B409B2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCF2EA42BC4457300B409B2 /* Preview Assets.xcassets */; };
+		FBCF2EAE2BC445A500B409B2 /* FRHorizontalCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FBCF2EAD2BC445A500B409B2 /* FRHorizontalCalendar */; };
+		FBCF2EB02BC5362000B409B2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF2EAF2BC5362000B409B2 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		FBCF2E9F2BC4457100B409B2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBCF2EA12BC4457300B409B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBCF2EA42BC4457300B409B2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBCF2EAB2BC4459500B409B2 /* FRHorizontalCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FRHorizontalCalendar; path = ../FRHorizontalCalendar; sourceTree = "<group>"; };
+		FBCF2EAF2BC5362000B409B2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCF2EAE2BC445A500B409B2 /* FRHorizontalCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,8 +40,10 @@
 		FBCF2E912BC4457100B409B2 = {
 			isa = PBXGroup;
 			children = (
+				FBCF2EAB2BC4459500B409B2 /* FRHorizontalCalendar */,
 				FBCF2E9C2BC4457100B409B2 /* SampleProject */,
 				FBCF2E9B2BC4457100B409B2 /* Products */,
+				FBCF2EAC2BC445A500B409B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +60,7 @@
 			children = (
 				FBCF2E9D2BC4457100B409B2 /* SampleProjectApp.swift */,
 				FBCF2E9F2BC4457100B409B2 /* ContentView.swift */,
+				FBCF2EAF2BC5362000B409B2 /* ContentViewModel.swift */,
 				FBCF2EA12BC4457300B409B2 /* Assets.xcassets */,
 				FBCF2EA32BC4457300B409B2 /* Preview Content */,
 			);
@@ -65,6 +73,13 @@
 				FBCF2EA42BC4457300B409B2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FBCF2EAC2BC445A500B409B2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +98,9 @@
 			dependencies = (
 			);
 			name = SampleProject;
+			packageProductDependencies = (
+				FBCF2EAD2BC445A500B409B2 /* FRHorizontalCalendar */,
+			);
 			productName = SampleProject;
 			productReference = FBCF2E9A2BC4457100B409B2 /* SampleProject.app */;
 			productType = "com.apple.product-type.application";
@@ -139,6 +157,7 @@
 			files = (
 				FBCF2EA02BC4457100B409B2 /* ContentView.swift in Sources */,
 				FBCF2E9E2BC4457100B409B2 /* SampleProjectApp.swift in Sources */,
+				FBCF2EB02BC5362000B409B2 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +361,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBCF2EAD2BC445A500B409B2 /* FRHorizontalCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FRHorizontalCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBCF2E922BC4457100B409B2 /* Project object */;
 }
