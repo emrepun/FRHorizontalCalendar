@@ -36,20 +36,16 @@ final class ContentViewModel: ObservableObject {
     }
 }
 
-extension ContentViewModel: FRCalendarViewModelTapObserving {
+extension ContentViewModel: FRCalendarObserving {
     func didTapDay(onDate: Date) {
-        // IMPLEMENT ME
+        // Get notified when a day is tapped, an opportunity to update other parts of the app
     }
     
-    func dayAppeared(onDate: Date) {
-        // IMPLEMENT ME
+    func dayAppeared(forDate: Date) {
+        // Get notified when a day appears, can be used to set content available in a paginated way for example
     }
 
     func didSetInitialHeight(_ height: CGFloat) {
         calendarHeight = height
-    }
-
-    func didAutoSelectInitialDay(_ date: Date) {
-        
     }
 }

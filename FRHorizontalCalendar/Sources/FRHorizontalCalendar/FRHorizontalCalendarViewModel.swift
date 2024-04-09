@@ -7,33 +7,13 @@
 
 import SwiftUI
 
-struct FRCalendarDayModel: Hashable {
-    let date: Date
-    var isSelected: Bool
-    var hasContentAvailable: Bool
-    // false if in the future
-    let isAvailable: Bool
-}
-
-public protocol FRCalendarViewModelTapObserving: AnyObject {
-    
-    /// Implement this method if you will add the calendar to a scrollable component (List, ScrollView, etc.)
-    /// Once it is called, set the height value on your observed object or state object, and update calendar view's height
-    /// by updating a published property from your observed object where the view sets the value as calendar's height.
-    /// - Parameter height: Height computed for the current device's orientation and the space available for the calendar's width.
-    func didSetInitialHeight(_ height: CGFloat)
-    func didTapDay(onDate: Date)
-    func dayAppeared(onDate: Date)
-    func didAutoSelectInitialDay(_ date: Date)
-}
-
 public final class FRHorizontalCalendarViewModel: ObservableObject {
     
     @Published var allDays: [FRCalendarDayModel] = []
     @Published var selectedDayText: String = ""
     @Published var mostProminentMonthText: String = ""
 
-    public weak var delegate: FRCalendarViewModelTapObserving? {
+    public weak var delegate: FRCalendarObserving? {
         didSet {
             guard allDays.indices.contains(selectedDayIndex) else {
                 return
@@ -83,7 +63,7 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
             FRCalendarDayModel(date: $0, isSelected: false, hasContentAvailable: false, isAvailable: true)
         }
         guard allDays.count > 7 else {
-//            assertionFailure("The calendar must be initialised with a start date that is earlier than 7 days ago")
+            assertionFailure("The calendar must be initialised with a start date that is earlier than 7 days ago")
             self.allDays = []
             self.selectedDayIndex = 0
             self.selectedDayText = ""
