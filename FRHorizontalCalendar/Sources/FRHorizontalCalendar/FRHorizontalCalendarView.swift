@@ -2,7 +2,16 @@ import SwiftUI
 
 public struct FRHorizontalCalendarView: View {
     
+    private enum ViewConstants {
+        static let numberOfFittingElements = 7.0
+        static let interItemSpacing = 4.0
+    }
+
     @ObservedObject var viewModel: FRHorizontalCalendarViewModel
+
+    public init(viewModel: FRHorizontalCalendarViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         GeometryReader { proxy in
@@ -13,7 +22,7 @@ public struct FRHorizontalCalendarView: View {
                     .foregroundStyle(Color(uiColor: .systemGray))
                     .padding(.horizontal)
                 ScrollView(.horizontal) {
-                    LazyHStack(spacing: 2) {
+                    LazyHStack(spacing: ViewConstants.interItemSpacing) {
                         ForEach(Array(viewModel.allDays.enumerated()), id: \.element) { index, day in
                             VStack(alignment: .center, spacing: 4.0) {
                                 Text(viewModel.dayStringFor(day.date))
@@ -48,14 +57,13 @@ public struct FRHorizontalCalendarView: View {
                 .flipsForRightToLeftLayoutDirection(true)
                 .environment(\.layoutDirection, .rightToLeft)
                 .scrollIndicators(.hidden)
-                .frame(height: widthFromScreenWidth(screenWidth: proxy.size.width) + 8.0)
             }
         }
     }
     
     private func widthFromScreenWidth(screenWidth: CGFloat) -> CGFloat {
-        // 2.75 is not super accurate, but it is the spacing between items in the grid
-        // for some reason I couldn't get it to respect spacing provided on initialisation.
-        (screenWidth - 32 - (6*2)) / 7
+        let width = (screenWidth - (6 * ViewConstants.interItemSpacing) - 1.0) / ViewConstants.numberOfFittingElements
+        viewModel.setHeight(width + 28.0)
+        return width
     }
 }

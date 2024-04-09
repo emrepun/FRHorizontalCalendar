@@ -15,18 +15,24 @@ struct FRCalendarDayModel: Hashable {
     let isAvailable: Bool
 }
 
-protocol FRCalendarViewModelTapObserving: AnyObject {
+public protocol FRCalendarViewModelTapObserving: AnyObject {
+    
+    /// Implement this method if you will add the calendar to a scrollable component (List, ScrollView, etc.)
+    /// Once it is called, set the height value on your observed object or state object, and update calendar view's height
+    /// by updating a published property from your observed object where the view sets the value as calendar's height.
+    /// - Parameter height: Height computed for the current device's orientation and the space available for the calendar's width.
+    func didSetInitialHeight(_ height: CGFloat)
     func didTapDay(onDate: Date)
     func dayAppeared(onDate: Date)
 }
 
-final class FRHorizontalCalendarViewModel: ObservableObject {
+public final class FRHorizontalCalendarViewModel: ObservableObject {
     
     @Published var allDays: [FRCalendarDayModel] = []
     @Published var selectedDayText: String = ""
     @Published var mostProminentMonthText: String = ""
 
-    weak var delegate: FRCalendarViewModelTapObserving? {
+    public weak var delegate: FRCalendarViewModelTapObserving? {
         didSet {
             delegate?.didTapDay(onDate: allDays[selectedDayIndex].date)
         }
@@ -34,6 +40,7 @@ final class FRHorizontalCalendarViewModel: ObservableObject {
 
     private var selectedDayIndex: Int
     private var visibleDays: Set<FRCalendarDayModel> = []
+    private var didSetHeightOnFirstLoad = false
     
     /// A dictionary to keep the index of the array for given Dates
     /// It is used to  update content available status for days performantly
@@ -67,7 +74,7 @@ final class FRHorizontalCalendarViewModel: ObservableObject {
         return dateFormatter
     }()
 
-    init(startDate: Date) {
+    public init(startDate: Date) {
         var allDays = Date.dates(from: startDate, to: .now).map {
             FRCalendarDayModel(date: $0, isSelected: false, hasContentAvailable: false, isAvailable: true)
         }
@@ -83,6 +90,16 @@ final class FRHorizontalCalendarViewModel: ObservableObject {
         setProminentMonthText()
     }
 
+
+    func setHeight(_ height: CGFloat) {
+        guard didSetHeightOnFirstLoad == false else {
+            return
+        }
+        didSetHeightOnFirstLoad = true
+        DispatchQueue.main.async {
+            self.delegate?.didSetInitialHeight(height)
+        }
+    }
 
     func dayStringFor(_ date: Date) -> String {
         return dayNameFormatter.string(from: date)
