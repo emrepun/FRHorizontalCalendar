@@ -1,6 +1,8 @@
 # FRHorizontalCalendar
 Horizontal Single Row Calendar for SwiftUI. From [Fit Records](https://apps.apple.com/app/fit-records-workout-tracker/id6449899890)
 
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjNkZjhuZXp6ajQzOTl0cXc3NjJzYmgwZW4zM213dGJoZGl5eTFkZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZFWf2ckUCM7OYb1f9W/giphy.gif)
+
 ## Requirements:
 - iOS 17.0
 
