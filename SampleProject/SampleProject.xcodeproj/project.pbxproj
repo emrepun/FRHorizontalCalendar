@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FBC6E00F2BC5571C00F9D40C /* FRHorizontalCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FBC6E00E2BC5571C00F9D40C /* FRHorizontalCalendar */; };
 		FBCF2E9E2BC4457100B409B2 /* SampleProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF2E9D2BC4457100B409B2 /* SampleProjectApp.swift */; };
 		FBCF2EA02BC4457100B409B2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF2E9F2BC4457100B409B2 /* ContentView.swift */; };
 		FBCF2EA22BC4457300B409B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCF2EA12BC4457300B409B2 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC6E00F2BC5571C00F9D40C /* FRHorizontalCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +97,7 @@
 			);
 			name = SampleProject;
 			packageProductDependencies = (
+				FBC6E00E2BC5571C00F9D40C /* FRHorizontalCalendar */,
 			);
 			productName = SampleProject;
 			productReference = FBCF2E9A2BC4457100B409B2 /* SampleProject.app */;
@@ -124,6 +127,9 @@
 				Base,
 			);
 			mainGroup = FBCF2E912BC4457100B409B2;
+			packageReferences = (
+				FBC6E00D2BC5571B00F9D40C /* XCRemoteSwiftPackageReference "FRHorizontalCalendar" */,
+			);
 			productRefGroup = FBCF2E9B2BC4457100B409B2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FBC6E00D2BC5571B00F9D40C /* XCRemoteSwiftPackageReference "FRHorizontalCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/emrepun/FRHorizontalCalendar";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBC6E00E2BC5571C00F9D40C /* FRHorizontalCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBC6E00D2BC5571B00F9D40C /* XCRemoteSwiftPackageReference "FRHorizontalCalendar" */;
+			productName = FRHorizontalCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBCF2E922BC4457100B409B2 /* Project object */;
 }

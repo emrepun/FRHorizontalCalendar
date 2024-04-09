@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "frhorizontalcalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/emrepun/FRHorizontalCalendar",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e4f514ce61ba6ad05ca543a1c2f455ed3e885031"
+      }
+    }
+  ],
+  "version" : 2
+}
