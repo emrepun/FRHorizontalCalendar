@@ -27,9 +27,9 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
     }
 
     // MARK: - setHeight(_ height: CGFloat) tests
-    func test_delegate_is_notified_only_once_when_height_is_set() throws {
-        let sut = FRHorizontalCalendarViewModel(startDate: calendarStartDate)
-        sut.delegate = delegateMock
+
+    func test_delegate_is_notified_only_once_when_height_is_set() {
+        let sut = makeSUTAndSetDelegate()
         let expectation = XCTestExpectation()
         expectation.assertForOverFulfill = true
         delegateMock.expectationToFullfilWhenDidSetInitialHeightIsCalled = expectation
@@ -41,9 +41,27 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 0.1)
     }
 
+    // MARK: - dayStringFor(_ date: Date) -> String
+
+    func test_day_string_is_formatted_as_expected() throws {
+        let dateComponents = DateComponents(year: 2025, month: 4, day: 10)
+        let date = try XCTUnwrap(Calendar.current.date(from: dateComponents))
+        let sut = makeSUTAndSetDelegate()
+
+        let result = sut.dayStringFor(date)
+
+        XCTAssertEqual(result, "Thu")
+    }
+
+    // MARK: - Utilities
+    private func makeSUTAndSetDelegate() -> FRHorizontalCalendarViewModel {
+        let sut = FRHorizontalCalendarViewModel(startDate: calendarStartDate)
+        sut.delegate = delegateMock
+        return sut
+    }
     private func subtractDays(from startDate: Date, dayCount: Int) -> Date? {
         guard let newDate = Calendar.current.date(byAdding: .day, value: -dayCount, to: startDate) else {
-            fatalError()
+            return nil
         }
         return newDate
     }
