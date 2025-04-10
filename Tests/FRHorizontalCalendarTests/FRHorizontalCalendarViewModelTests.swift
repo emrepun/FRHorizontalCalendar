@@ -44,8 +44,7 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
     // MARK: - dayStringFor(_ date: Date) -> String
 
     func test_day_string_is_formatted_as_expected() throws {
-        let dateComponents = DateComponents(year: 2025, month: 4, day: 10)
-        let date = try XCTUnwrap(Calendar.current.date(from: dateComponents))
+        let date = try XCTUnwrap(makeDateForARegularDay())
         let sut = makeSUTAndSetDelegate()
 
         let result = sut.dayStringFor(date)
@@ -53,12 +52,29 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
         XCTAssertEqual(result, "Thu")
     }
 
+    // MARK: - dateStringFor(_ date: Date) -> String
+
+    func test_date_string_is_formatted_as_expected() throws {
+        let date = try XCTUnwrap(makeDateForARegularDay())
+        let sut = makeSUTAndSetDelegate()
+
+        let result = sut.dateStringFor(date)
+        XCTAssertEqual(result, "10")
+    }
+
     // MARK: - Utilities
+
+    private func makeDateForARegularDay() -> Date? {
+        let dateComponents = DateComponents(year: 2025, month: 4, day: 10)
+        return Calendar.current.date(from: dateComponents)
+    }
+
     private func makeSUTAndSetDelegate() -> FRHorizontalCalendarViewModel {
         let sut = FRHorizontalCalendarViewModel(startDate: calendarStartDate)
         sut.delegate = delegateMock
         return sut
     }
+
     private func subtractDays(from startDate: Date, dayCount: Int) -> Date? {
         guard let newDate = Calendar.current.date(byAdding: .day, value: -dayCount, to: startDate) else {
             return nil
