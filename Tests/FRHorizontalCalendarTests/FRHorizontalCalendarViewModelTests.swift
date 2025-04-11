@@ -189,6 +189,52 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
         XCTAssertEqual(delegateMock.theLatestDateProvidedWhenDayAppearedWasCalled, beginningDateOfToday)
     }
 
+    // MARK: - setContentAvailableForDaysWithGivenDates(_ dates: [Date])
+
+    func test_setting_content_available_for_given_dates_update_the_day_models() throws {
+        let sut = makeSUTAndSetDelegate()
+        // This date will guaranteed to be non-today for any day this unit tests are run in the future
+        let dateComponents = DateComponents(year: 2025, month: 4, day: 9)
+        let date = try XCTUnwrap(Calendar.current.date(from: dateComponents))
+
+        sut.setContentAvailableForDaysWithGivenDates([date])
+
+        let contentAvailableDayIndex = sut.allDays.first(where: {
+            $0.hasContentAvailable &&
+            $0.date == Calendar.current.startOfDay(for: date)
+        })
+
+        // Since by default no day has contentAvailable, and we only set the content available for one date,
+        // If we get a non-nil value from allDays where dates are a match, we can assume it is working as intended
+        XCTAssertNotNil(contentAvailableDayIndex)
+    }
+
+    func test_removing_content_available_for_given_dates_update_day_models() throws {
+        let sut = makeSUTAndSetDelegate()
+        // This date will guaranteed to be non-today for any day this unit tests are run in the future
+        let dateComponents = DateComponents(year: 2025, month: 4, day: 9)
+        let date = try XCTUnwrap(Calendar.current.date(from: dateComponents))
+        // First set content available for the date to bring it to the desired state
+        sut.setContentAvailableForDaysWithGivenDates([date])
+
+        sut.removeContentAvailableForDayWithGivenDate(date)
+
+        let contentAvailableDayIndex = sut.allDays.first(where: {
+            $0.hasContentAvailable &&
+            $0.date == Calendar.current.startOfDay(for: date)
+        })
+
+        XCTAssertNil(contentAvailableDayIndex)
+    }
+    
+    // TODO: Write tests `dayDisappeared`, which is related to mostProminentMonthText
+    // TODO: Write tests for `mostProminentMonthText`
+    // TODO: Write tests for `didTapOnDayAt`
+    // It is not easy to write tests for the methods above
+    // due to the way the calendar is configured at the moment, we will revisit this later.
+    // The problem is the calendar automatically loads and adds days to the day when the code is run
+    // Thus, it is hard to implement non-flaky tests at the moments.
+
     // MARK: - Utilities
 
     private func makeDay(date: Date = .now, isSelected: Bool = false, hasContentAvailable: Bool = false, isAvailable: Bool = false) -> FRCalendarDayModel {
