@@ -146,6 +146,48 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
         
         XCTAssertEqual(result, Color(uiColor: .label))
     }
+    
+    // MARK: - backgroundColorFor(_ day: FRCalendarDayModel) -> Color
+
+    func test_correct_background_color_is_provided_for_a_selected_day() {
+        let sut = makeSUTAndSetDelegate()
+        let day = makeDay(isSelected: true)
+
+        let result = sut.backgroundColorFor(day)
+
+        XCTAssertEqual(result, Color.blue)
+    }
+
+    func test_correct_background_color_is_provided_for_an_unselected_day_with_content() {
+        let sut = makeSUTAndSetDelegate()
+        let day = makeDay(hasContentAvailable: true)
+
+        let result = sut.backgroundColorFor(day)
+
+        XCTAssertEqual(result, Color.blue.opacity(0.25))
+    }
+
+    func test_correct_background_color_is_provided_for_an_unselected_day_with_no_content() {
+        let sut = makeSUTAndSetDelegate()
+        let day = makeDay()
+
+        let result = sut.backgroundColorFor(day)
+
+        XCTAssertEqual(result, Color.clear)
+    }
+
+    // MARK: - dayAppeared(_ day: FRCalendarDayModel)
+
+    func test_delegate_is_notified_when_a_day_appears() {
+        let sut = makeSUTAndSetDelegate()
+        let beginningDateOfToday = Calendar.current.startOfDay(for: .now)
+        let day = makeDay(date: beginningDateOfToday)
+
+        sut.dayAppeared(day)
+
+        XCTAssertEqual(delegateMock.numberOfTimesDayAppearedWasCalled, 1)
+        XCTAssertEqual(delegateMock.theLatestDateProvidedWhenDayAppearedWasCalled, beginningDateOfToday)
+    }
 
     // MARK: - Utilities
 

@@ -13,7 +13,12 @@ final class FRCalendarObservingMock: FRCalendarObserving {
 
     func didTapDay(onDate: Date) { }
 
-    func dayAppeared(forDate: Date) { }
+    var numberOfTimesDayAppearedWasCalled = 0
+    var theLatestDateProvidedWhenDayAppearedWasCalled: Date?
+    func dayAppeared(forDate: Date) {
+        numberOfTimesDayAppearedWasCalled += 1
+        theLatestDateProvidedWhenDayAppearedWasCalled = forDate
+    }
 
     var expectationToFullfilWhenDidSetInitialHeightIsCalled: XCTestExpectation?
     func didSetInitialHeight(_ height: CGFloat) {
