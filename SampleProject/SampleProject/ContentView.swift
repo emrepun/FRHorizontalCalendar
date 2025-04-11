@@ -30,6 +30,7 @@ struct ContentView: View {
                         .foregroundStyle(Color.blue)
                 }
                 .padding()
+                .buttonStyle(.plain)
                 
             }
             .listRowSeparator(.hidden)
