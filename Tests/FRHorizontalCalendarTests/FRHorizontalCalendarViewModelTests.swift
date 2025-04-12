@@ -28,6 +28,7 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
     }
     
     // MARK: - didAutoSelectInitialDay(_ date: Date)
+
     func test_delegate_is_notified_when_initial_day_is_auto_selected() {
         _ = makeSUTAndSetDelegate()
 
