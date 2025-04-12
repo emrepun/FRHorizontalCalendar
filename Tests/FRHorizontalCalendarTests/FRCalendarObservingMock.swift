@@ -25,6 +25,11 @@ final class FRCalendarObservingMock: FRCalendarObserving {
         expectationToFullfilWhenDidSetInitialHeightIsCalled?.fulfill()
     }
 
-    func didAutoSelectInitialDay(_ date: Date) { }
+    var numberOfTimesDidAutoSelectInitialDayWasCalled = 0
+    var theLatestDateProvidedWhenDidAutoSelectInitialDayWasCalled: Date?
+    func didAutoSelectInitialDay(_ date: Date) {
+        numberOfTimesDidAutoSelectInitialDayWasCalled += 1
+        theLatestDateProvidedWhenDidAutoSelectInitialDayWasCalled = date
+    }
 
 }

@@ -27,6 +27,22 @@ final class FRHorizontalCalendarViewModelTests: XCTestCase {
         super.tearDown()
     }
     
+    // MARK: - didAutoSelectInitialDay(_ date: Date)
+    func test_delegate_is_notified_when_initial_day_is_auto_selected() {
+        _ = makeSUTAndSetDelegate()
+
+        XCTAssertEqual(1, delegateMock.numberOfTimesDidAutoSelectInitialDayWasCalled)
+    }
+
+    func test_expected_date_is_provided_for_auto_selected_initial_day() {
+        // it should select today automatically, regardless of what today is
+        _ = makeSUTAndSetDelegate()
+
+        let expectedDate = Calendar.current.startOfDay(for: .now)
+
+        XCTAssertEqual(expectedDate, delegateMock.theLatestDateProvidedWhenDidAutoSelectInitialDayWasCalled)
+    }
+    
     // MARK: - setHeight(_ height: CGFloat) tests
     
     func test_delegate_is_notified_only_once_when_height_is_set() {
