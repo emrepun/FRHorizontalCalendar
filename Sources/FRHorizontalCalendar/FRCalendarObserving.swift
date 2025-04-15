@@ -33,7 +33,7 @@ public protocol FRCalendarObserving: AnyObject {
 
 // Optional methods
 public extension FRCalendarObserving {
-    func dayAppeared(onDate: Date) {
+    func dayAppeared(forDate: Date) {
         
     }
 

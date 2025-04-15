@@ -137,7 +137,7 @@ public final class FRHorizontalCalendarViewModel: ObservableObject {
     func dayAppeared(_ day: FRCalendarDayModel) {
         visibleDays.insert(day)
         setProminentMonthText()
-        delegate?.dayAppeared(onDate: day.date)
+        delegate?.dayAppeared(forDate: day.date)
     }
 
     func dayDisappeared(_ day: FRCalendarDayModel) {
